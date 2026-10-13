@@ -1,0 +1,76 @@
+---
+name: til
+description: 부트캠프 학습 자료(파일 또는 붙여넣은 본문)를 사용자의 TIL 양식으로 정리해 ① 노션 페이지 ② TIL 레포 마크다운 ③ 티스토리용 목차 포함 HTML 세 가지로 출력한다. 사용자가 `$til` 또는 `/til` 을 입력하거나 "TIL 정리", "노션에 정리", "티스토리 글로" 등 학습 내용 정리를 요청할 때 사용.
+---
+
+# /til — 학습 내용 → 노션 · TIL 레포 · 티스토리 HTML
+
+## 사용법
+
+```
+$til <파일경로 또는 본문> [옵션]
+```
+
+옵션 (생략 시 세 곳 모두):
+- `notion` / `md` / `tistory` — 해당 대상만 출력 (여러 개 조합 가능, 예: `/til notes.md md tistory`)
+- `date=YYYY-MM-DD` — 학습 날짜 (기본: 오늘)
+- `day=N` — 일차 강제 지정 (기본: 자동 계산)
+
+Codex에서는 `$til`로 호출한다. `/til`이라고 요청해도 같은 스킬로 처리한다. Notion 도구는 현재 제공되는 도구 이름과 스키마를 확인해서 사용하고, 연결이나 업로드 기능이 없으면 가능한 로컬 결과를 완성한 뒤 제한을 보고한다.
+
+## 고정 경로
+
+| 대상 | 위치 |
+|---|---|
+| 노션 부모 페이지 | `AI 에이전트 엔지니어` — id `3a1c2c49a25080368f5ee4779154c633` |
+| TIL 레포 | `C:\puh\TIL\AI_Agent\` |
+| TIL 목차 | `C:\puh\TIL\AI_Agent\README.md` |
+| 이미지 | `C:\puh\TIL\AI_Agent\imagesNN\<원본파일명>` (NN = 일차, 예: `images54/01_main_page.png`) |
+| 티스토리 HTML | `C:\puh\TIL\_tistory\YYYY_MM_DD_DayNN.html` (git 미추적) |
+
+## 절차
+
+### 1. 입력 읽기
+- 파일 경로면 사용 가능한 파일 읽기 도구로 전부 읽는다 (PDF는 pdf 스킬, 이미지는 직접 보고 내용 파악). 여러 파일이면 모두 읽는다.
+- 본문이 붙여넣어졌으면 그대로 사용한다.
+- 입력에 없는 내용을 지어내지 않는다. 설명 보강은 입력 범위 안의 개념을 풀어 쓰는 정도로만 한다.
+
+### 2. 날짜·일차·제목 결정
+- **먼저 `C:\puh\TIL` 에서 작업 트리 상태를 확인하고 `git pull --ff-only` 로 최신화한다. 실패하면 reset/stash/강제 병합을 하지 말고 원인을 보고한다** (다른 PC에서 올린 일차 누락 방지).
+- 일차 = max(레포 `AI_Agent/*DayNN*` 최대값, 부모 노션 페이지의 하위 페이지 제목 `NN일차` 최대값) + 1.
+  - 노션 확인: 사용 가능한 Notion 조회 도구로 부모 페이지를 읽어 하위 페이지 제목에서 최대 일차를 찾는다.
+  - 같은 날짜의 문서가 이미 있으면 새로 만들지 말고 사용자에게 덮어쓸지/추가할지 묻는다.
+- 한글 제목: `YY.MM.DD N일차(주제A · 주제B · 주제C)` — 예: `26.10.08 54일차(Database · PostgreSQL · ERD 및 SQL 작성 실습)`
+- 영문 파일명: `YYYY_MM_DD_DayNN(English_Topic_Words).md` — 예: `2026_10_07_Day53(Database_Design_Normalization_ERD).md`
+
+### 3. 본문 작성 (공통 원고)
+[references/style-guide.md](references/style-guide.md)의 양식을 **반드시** 따른다. 먼저 공통 마크다운 원고 하나를 완성한 뒤, 이를 세 형식으로 변환한다. 세 출력의 내용은 동일해야 한다.
+
+### 4. 출력
+
+**(a) TIL 레포 md**
+- `C:\puh\TIL\AI_Agent\<영문 파일명>` 에 저장. 첫 줄은 `# <한글 제목>`.
+- 이미지는 `imagesNN/` 폴더에 **원본 파일명 그대로** 복사하고 alt 텍스트에 소주제명을 넣어 참조: `![메인 페이지](./imagesNN/01_main_page.png)`
+- `README.md` 목록 맨 끝에 한 줄 추가 (괄호·쉼표·& 는 URL 인코딩):
+  `- [2026_10_07_Day53(Database_Design_Normalization_ERD)](2026_10_07_Day53%28Database_Design_Normalization_ERD%29.md)`
+  누락된 이전 일차가 보이면 사용자에게 알려준다.
+- **커밋/푸시는 하지 않는다.** 끝나고 "커밋할까요?"라고 묻는다. 승인 시 메시지는 `DayNN`.
+
+**(b) 노션**
+- 사용 가능한 Notion 페이지 생성 도구로 부모 페이지 하위에 생성. 페이지 title = 한글 제목, 본문은 `## [TIL] …` 부터 시작 (본문에 `# 제목` 중복 금지).
+- Notion enhanced markdown 사용: 표는 `<table fit-page-width="true" header-row="true">`, 코드블록 언어 태그 유지 (흐름도는 `plain text`).
+- 로컬 이미지는 사용 가능한 Notion 파일 업로드 도구로 올려 삽입한다. 실패하면 해당 위치에 `[이미지: 파일명]` 을 남기고 보고한다.
+- 생성 후 페이지 URL을 보고한다.
+
+**(c) 티스토리 HTML**
+- [references/tistory-template.html](references/tistory-template.html) 구조를 따른다.
+- 맨 위에 목차 박스 — 모든 `h2`(그리고 `h3`)에 `id="sec-1"`, `id="sec-1-1"` … 을 붙이고 목차에서 `#sec-…` 로 링크.
+- 스타일은 전부 인라인 (티스토리 HTML 모드 붙여넣기 기준, `<style>`·`<script>` 금지).
+- 코드는 HTML 이스케이프(`&lt; &gt; &amp;`) 필수.
+- 이미지는 `<!-- 이미지: imagesNN/<원본파일명> 여기에 업로드 -->` 주석 + 캡션으로 자리만 남긴다 (티스토리 에디터에서 직접 업로드).
+- 해시태그는 본문 끝 대신 "티스토리 태그 입력란용"으로 최종 보고에 쉼표 구분 목록으로 따로 준다.
+
+### 5. 최종 보고
+짧게: 노션 URL, md 파일 경로, HTML 파일 경로, 티스토리 태그 목록, 커밋 여부 질문.
+
+
