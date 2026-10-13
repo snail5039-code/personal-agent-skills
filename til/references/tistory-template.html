@@ -1,0 +1,91 @@
+<!--
+  티스토리 HTML 모드 붙여넣기용 템플릿.
+  - <style>/<script> 없이 전부 인라인 스타일.
+  - h2/h3 에 id 부여 → 상단 목차에서 앵커 링크.
+  - 코드블록은 티스토리 에디터 형식(data-ke-type="codeblock") 사용 → 스킨의 하이라이터가 적용됨.
+  - 코드 안의 < > & 는 반드시 &lt; &gt; &amp; 로 이스케이프.
+  - 아래 {{ }} 는 치환 대상, 반복 블록은 주석으로 표시.
+-->
+
+<!-- 요약 -->
+<h2 id="sec-til" style="font-size: 1.5em; font-weight: bold; border-bottom: 2px solid #333; padding-bottom: 6px; margin: 1.6em 0 0.8em;">[TIL] {{한 줄 요약}}</h2>
+<p data-ke-size="size16">{{도입 문단}}</p>
+<p data-ke-size="size16">이론과 실습은 다음 흐름으로 이어졌다.</p>
+<pre class="plaintext" data-ke-language="plaintext" data-ke-type="codeblock"><code>{{단계 1}}
+→ {{단계 2}}
+→ {{단계 3}}</code></pre>
+
+<!-- 목차 -->
+<div style="background: #f7f7f9; border: 1px solid #e1e1e8; border-radius: 8px; padding: 16px 20px; margin: 1.5em 0;">
+  <p data-ke-size="size16" style="font-weight: bold; margin: 0 0 8px;">📑 목차</p>
+  <ol style="margin: 0; padding-left: 20px; line-height: 1.9;">
+    <!-- h2 마다 반복 -->
+    <li><a href="#sec-1" style="color: #333; text-decoration: none;">{{대주제 (번호 없이, ol이 자동 번호)}}</a>
+      <!-- h3 가 있으면 -->
+      <ul style="padding-left: 18px; list-style: disc; font-size: 0.95em;">
+        <li><a href="#sec-1-1" style="color: #666; text-decoration: none;">{{1-1. 소주제}}</a></li>
+      </ul>
+    </li>
+    <li><a href="#sec-confused" style="color: #333; text-decoration: none;">헷갈린 점</a></li>
+    <li style="list-style: none; margin-left: -20px;"><a href="#sec-extra" style="color: #333; text-decoration: none;">➕ 추가!</a></li>
+  </ol>
+</div>
+
+<hr contenteditable="false" data-ke-type="horizontalRule" data-ke-style="style1" />
+
+<!-- 대주제 (반복) -->
+<h2 id="sec-1" style="font-size: 1.5em; font-weight: bold; border-bottom: 2px solid #333; padding-bottom: 6px; margin: 1.6em 0 0.8em;">{{1. 대주제}}</h2>
+
+<h3 id="sec-1-1" style="font-size: 1.2em; font-weight: bold; border-left: 4px solid #4a7bd0; padding-left: 10px; margin: 1.3em 0 0.6em;">{{1-1. 소주제}}</h3>
+<p data-ke-size="size16">{{설명. 핵심은 <b>굵게</b>, 코드명은 <code style="background: #f3f4f6; color: #c7254e; padding: 2px 5px; border-radius: 4px;">table_name</code>}}</p>
+
+<!-- 이미지 자리 -->
+<!-- 이미지: imagesNN/1.png 여기에 업로드 -->
+<p data-ke-size="size16" style="text-align: center; color: #888; font-size: 0.9em;">[이미지: {{파일명}}]</p>
+
+<!-- 표 -->
+<table style="border-collapse: collapse; width: 100%; margin: 1em 0;" border="1" data-ke-align="alignLeft">
+  <thead>
+    <tr style="background: #f0f3f8;">
+      <th style="border: 1px solid #ccc; padding: 8px; text-align: left;">{{구분}}</th>
+      <th style="border: 1px solid #ccc; padding: 8px; text-align: left;">{{의미}}</th>
+      <th style="border: 1px solid #ccc; padding: 8px; text-align: left;">{{예시}}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border: 1px solid #ccc; padding: 8px;">…</td>
+      <td style="border: 1px solid #ccc; padding: 8px;">…</td>
+      <td style="border: 1px solid #ccc; padding: 8px;">…</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- 코드블록: class / data-ke-language 에 sql, python, bash, json, plaintext 등 -->
+<pre class="sql" data-ke-language="sql" data-ke-type="codeblock"><code>SELECT a.name
+FROM accommodation a
+WHERE a.price &lt; 100000;</code></pre>
+
+<!-- bullet -->
+<ul style="line-height: 1.8;" data-ke-list-type="disc">
+  <li>…</li>
+</ul>
+
+<hr contenteditable="false" data-ke-type="horizontalRule" data-ke-style="style1" />
+
+<!-- 헷갈린 점 -->
+<h2 id="sec-confused" style="font-size: 1.5em; font-weight: bold; border-bottom: 2px solid #333; padding-bottom: 6px; margin: 1.6em 0 0.8em;">{{N. 헷갈린 점}}</h2>
+<p data-ke-size="size16">…</p>
+
+<hr contenteditable="false" data-ke-type="horizontalRule" data-ke-style="style1" />
+
+<!-- 추가! -->
+<h2 id="sec-extra" style="font-size: 1.5em; font-weight: bold; border-bottom: 2px solid #333; padding-bottom: 6px; margin: 1.6em 0 0.8em;">추가!</h2>
+<p data-ke-size="size16">오늘 배운 것 정리</p>
+<ul style="line-height: 1.8;" data-ke-list-type="disc">
+  <li>…</li>
+</ul>
+<p data-ke-size="size16">{{~할 때는 다음 순서로 생각하면 된다.}}</p>
+<pre class="plaintext" data-ke-language="plaintext" data-ke-type="codeblock"><code>…
+→ …</code></pre>
+
