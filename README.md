@@ -5,6 +5,7 @@
 ## 포함된 스킬
 
 - `til`: 학습 자료를 Notion, TIL 저장소 Markdown, Tistory HTML 형식으로 정리한다.
+- `cover-letter-writing`: 채용공고와 실제 경험을 연결해 한국어 자기소개서를 작성하고 첨삭한다.
 
 ## Codex에 설치
 
@@ -23,6 +24,9 @@ PowerShell에서 다음 명령을 실행한다.
 ```text
 personal-agent-skills/til
 → ~/.codex/skills/til
+
+personal-agent-skills/cover-letter-writing
+→ ~/.codex/skills/cover-letter-writing
 ```
 
 `til` 스킬은 현재 `C:\puh\TIL` 경로와 개인 Notion 페이지를 사용하도록 설정되어 있다. 다른 컴퓨터에서는 TIL 저장소를 같은 위치에 두거나 `til/SKILL.md`의 고정 경로를 수정한다.

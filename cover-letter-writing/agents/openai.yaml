@@ -1,0 +1,4 @@
+interface:
+  display_name: "자기소개서 작성"
+  short_description: "채용공고와 실제 경험을 연결한 자기소개서 작성·첨삭"
+  default_prompt: "$cover-letter-writing을 사용해 이 문항의 의도를 분석하고 제 경험으로 자기소개서 초안을 작성해 주세요."
