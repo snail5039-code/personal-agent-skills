@@ -1,0 +1,4 @@
+interface:
+  display_name: "RAG 에이전트 만들기"
+  short_description: "문서를 분석해 추출·청킹·임베딩·에이전트·골든셋 평가 파이프라인 구축"
+  default_prompt: "$rag-agent-builder를 사용해 이 폴더의 문서로 RAG 에이전트를 만들고 골든셋으로 평가해 주세요."

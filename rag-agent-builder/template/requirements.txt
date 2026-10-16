@@ -1,0 +1,35 @@
+# Python 3.13에서 검증한 버전 (rag_agent_practice, 2026-10)
+
+# 추출 - PDF는 필수, 나머지는 해당 형식이 있을 때만 (HWP·DOC 등은 LibreOffice로 PDF 변환)
+pdfplumber==0.11.10
+python-docx==1.2.0      # .docx
+python-pptx==1.0.2      # .pptx
+openpyxl==3.1.5         # .xlsx
+beautifulsoup4==4.15.0  # .html (+ OCR 표 복원)
+pillow==12.3.0          # 이미지 파일
+
+# (선택) 이미지 OCR·그림 찾기 - rag.ocr, rag.figures를 쓸 때만
+rapidocr==3.10.0
+onnxruntime==1.30.0
+rapid-layout==1.2.1
+rapid_table==3.0.2
+numpy==2.5.3
+
+# LLM·에이전트 (Gemini 외 모델: langchain-openai / langchain-anthropic 추가)
+langchain==1.4.3
+langchain-core==1.6.6
+langchain-text-splitters==1.1.2
+langchain-google-genai==4.4.0
+google-genai==2.25.0
+pydantic==2.13.5
+python-dotenv==1.2.3
+
+# 검색
+langchain-chroma==1.1.0
+chromadb==1.5.9
+rank-bm25==0.2.2
+kiwipiepy==0.24.0
+
+# 평가
+openevals==0.2.0
+langsmith==0.14.1

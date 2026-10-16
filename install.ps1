@@ -1,6 +1,6 @@
 [CmdletBinding()]
 param(
-    [string[]]$Skill = @('til', 'cover-letter-writing')
+    [string[]]$Skill = @('til', 'cover-letter-writing', 'rag-agent-builder')
 )
 
 $repoRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
