@@ -1,0 +1,4 @@
+interface:
+  display_name: "Korean Job Discovery"
+  short_description: "전 직군 한국 채용을 범용·직무별·지역·대상별 경로에서 찾고 공식 원문으로 검증"
+  default_prompt: "Use $korean-job-discovery to research Korean jobs across relevant channels and verify current official postings."

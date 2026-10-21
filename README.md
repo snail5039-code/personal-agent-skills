@@ -11,6 +11,7 @@ Codex와 Claude Code에서 쓰는 개인 스킬 모음입니다.
 | **TIL 정리** | `$til` | 학습 자료를 TIL 형식으로 정리 | 노션 페이지, TIL 마크다운, 티스토리 HTML |
 | **자기소개서** | `$cover-letter-writing` | 채용공고와 경험을 연결해 작성 · 첨삭 | 초안 · 첨삭본, 확인 필요 항목, 예상 면접 질문 |
 | **RAG 에이전트** | `$rag-agent-builder` | 문서 폴더로 RAG 에이전트 구축 · 평가 | 파이프라인 프로젝트, 평가 리포트 |
+| **한국 채용공고 탐색** | `$korean-job-discovery` | 국내 채용 사이트·기업 채용 페이지에서 공고를 찾고 공식 원문으로 확인 | 공고 목록, 확인한 출처, 남은 확인 사항 |
 
 <br>
 
@@ -43,6 +44,7 @@ cd personal-agent-skills
 | 자기소개서 첨삭 | `$cover-letter-writing 아래 자소서 첨삭하고 예상 면접 질문 5개 알려줘` |
 | RAG 에이전트 | `$rag-agent-builder C:\docs 폴더로 RAG 에이전트 만들어줘` |
 | RAG 평가 | `$rag-agent-builder data/golden.csv로 평가하고 개선점 알려줘` |
+| 채용공고 탐색 | `$korean-job-discovery 서울 신입 백엔드·AI 에이전트 공고 찾아줘` |
 
 <br>
 
@@ -73,3 +75,9 @@ cd personal-agent-skills
 | Python | 3.13 |
 | API 키 | `GOOGLE_API_KEY` (`.env`에서 OpenAI · Claude로 변경 가능) |
 | 선택 | LibreOffice (HWP · DOC 처리 시) |
+
+<br>
+
+## 출처
+
+`korean-job-discovery`는 [Kimhyuntae9665/codex-skill-korean-job-discovery](https://github.com/Kimhyuntae9665/codex-skill-korean-job-discovery)(MIT)를 그대로 가져왔습니다. 원본 라이선스는 `korean-job-discovery/LICENSE`에 있습니다.
