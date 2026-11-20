@@ -1,0 +1,330 @@
+<title>장애 조치 보고</title>
+<style>
+  :root{
+    --bg:#f4f6f8; --card:#ffffff; --ink:#18212c; --sub:#5a6675; --line:#e2e7ed;
+    --brand:#1f5fbf; --brand-soft:#e9f0fb; --brand-deep:#17304f;
+    --ok:#117a46; --ok-soft:#e3f4ec;
+    --warn:#9a5600; --warn-soft:#fdf0dd;
+    --bad:#b0241c; --bad-soft:#fce8e6;
+    --info:#4a4fb5; --info-soft:#ececfb;
+    --code-bg:#eef1f5; --pre-bg:#111a24; --pre-ink:#e3ebf5; --pre-dim:#8fa3b8;
+    --rail:#cfd8e2;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#111519; --card:#191f26; --ink:#e6ebf1; --sub:#9aa6b4; --line:#293340;
+      --brand:#7cadf5; --brand-soft:#17273c; --brand-deep:#0d1a2b;
+      --ok:#5ccf98; --ok-soft:#12301f;
+      --warn:#efb05f; --warn-soft:#38270f;
+      --bad:#ff8d84; --bad-soft:#3a1917;
+      --info:#a5a9ff; --info-soft:#22244a;
+      --code-bg:#212a34; --pre-bg:#0a1119; --pre-ink:#e3ebf5; --pre-dim:#7b8ca0;
+      --rail:#33404f;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#111519; --card:#191f26; --ink:#e6ebf1; --sub:#9aa6b4; --line:#293340;
+    --brand:#7cadf5; --brand-soft:#17273c; --brand-deep:#0d1a2b;
+    --ok:#5ccf98; --ok-soft:#12301f;
+    --warn:#efb05f; --warn-soft:#38270f;
+    --bad:#ff8d84; --bad-soft:#3a1917;
+    --info:#a5a9ff; --info-soft:#22244a;
+    --code-bg:#212a34; --pre-bg:#0a1119; --pre-ink:#e3ebf5; --pre-dim:#7b8ca0;
+    --rail:#33404f;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,sans-serif;
+    font-size:16px; line-height:1.72; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:940px; margin:0 auto; padding:0 22px}
+
+  header.hero{
+    background:linear-gradient(135deg,var(--brand-deep) 0%,#1d4679 55%,#1f5fbf 100%);
+    color:#fff; padding:46px 0 38px;
+  }
+  .eyebrow{font-size:12.5px; letter-spacing:.1em; font-weight:700; opacity:.82; text-transform:uppercase}
+  h1{font-size:clamp(25px,4.2vw,34px); line-height:1.24; margin:12px 0 10px; font-weight:800; text-wrap:balance}
+  .hero p{margin:0; opacity:.9; max-width:62ch}
+  .herometa{display:flex; flex-wrap:wrap; gap:8px; margin-top:18px}
+  .chip{background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.22);
+    padding:4px 11px; border-radius:999px; font-size:12.5px; font-weight:600}
+
+  nav.toc{position:sticky; top:0; z-index:5; background:var(--card); border-bottom:1px solid var(--line)}
+  nav.toc .wrap{display:flex; gap:2px; overflow-x:auto}
+  nav.toc a{white-space:nowrap; padding:12px 11px; color:var(--sub); text-decoration:none;
+    font-size:13.5px; font-weight:600; border-bottom:2px solid transparent}
+  nav.toc a:hover,nav.toc a:focus-visible{color:var(--brand); border-bottom-color:var(--brand)}
+
+  section{margin-top:46px}
+  h2{font-size:22px; margin:0 0 4px; letter-spacing:-.01em; text-wrap:balance}
+  h2 + .lead{color:var(--sub); margin:0 0 18px; max-width:64ch}
+  h3{font-size:16.5px; margin:24px 0 7px}
+
+  .grid{display:grid; gap:13px}
+  .g2{grid-template-columns:repeat(auto-fit,minmax(290px,1fr))}
+  .g4{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+  .card{background:var(--card); border:1px solid var(--line); border-radius:13px; padding:17px 19px}
+  .card b.t{display:block; margin-bottom:3px}
+  .card .d{color:var(--sub); font-size:14.5px}
+
+  .stat{background:var(--card); border:1px solid var(--line); border-radius:13px; padding:16px 18px}
+  .stat .n{font-size:27px; font-weight:800; letter-spacing:-.02em; font-variant-numeric:tabular-nums; line-height:1.2}
+  .stat .l{color:var(--sub); font-size:13px; margin-top:2px}
+
+  .badge{display:inline-block; font-size:11.5px; font-weight:700; padding:3px 9px;
+    border-radius:999px; vertical-align:middle; white-space:nowrap}
+  .b-ok{background:var(--ok-soft); color:var(--ok)}
+  .b-warn{background:var(--warn-soft); color:var(--warn)}
+  .b-bad{background:var(--bad-soft); color:var(--bad)}
+  .b-info{background:var(--info-soft); color:var(--info)}
+  .b-brand{background:var(--brand-soft); color:var(--brand)}
+
+  .tablewrap{overflow-x:auto; border:1px solid var(--line); border-radius:13px; background:var(--card)}
+  table{border-collapse:collapse; width:100%; font-size:14.5px; min-width:560px}
+  th,td{padding:11px 14px; text-align:left; vertical-align:top; border-bottom:1px solid var(--line)}
+  th{background:var(--code-bg); font-size:12.5px; color:var(--sub); font-weight:700; white-space:nowrap}
+  tr:last-child td{border-bottom:none}
+
+  code{background:var(--code-bg); padding:2px 6px; border-radius:6px; font-size:.88em;
+    font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
+  pre{background:var(--pre-bg); color:var(--pre-ink); border-radius:11px; padding:15px 17px;
+    margin:11px 0; overflow-x:auto; font-size:13.3px; line-height:1.62}
+  pre code{background:none; padding:0; color:inherit; font-size:inherit}
+  pre .c{color:var(--pre-dim)}
+  pre .del{color:#ff9d94}
+  pre .add{color:#86e0ae}
+
+  .note{border-left:4px solid var(--info); background:var(--info-soft);
+    padding:13px 16px; border-radius:9px; font-size:14.6px; margin:14px 0}
+  .note.warn{background:var(--warn-soft); border-left-color:var(--warn)}
+  .note.bad{background:var(--bad-soft); border-left-color:var(--bad)}
+  .note.ok{background:var(--ok-soft); border-left-color:var(--ok)}
+  .note b{font-weight:700}
+
+  /* 추적 단계 — 실제로 순서가 의미를 갖는 곳에만 쓴다 */
+  .trace{list-style:none; margin:14px 0 0; padding:0; counter-reset:tr}
+  .trace > li{counter-increment:tr; position:relative; padding:0 0 20px 46px;
+    border-left:2px solid var(--rail); margin-left:14px}
+  .trace > li:last-child{border-left-color:transparent; padding-bottom:0}
+  .trace > li::before{content:counter(tr); position:absolute; left:-15px; top:-2px;
+    width:28px; height:28px; border-radius:50%; background:var(--brand); color:#fff;
+    display:grid; place-items:center; font-weight:800; font-size:13.5px}
+  .trace h4{margin:0 0 4px; font-size:15.5px; padding-top:2px}
+  .trace p{margin:0; color:var(--sub); font-size:14.6px}
+
+  .qa{border:1px solid var(--line); border-radius:11px; overflow:hidden; margin:12px 0}
+  .qa .q{background:var(--brand-soft); color:var(--brand); padding:9px 14px;
+    font-size:14px; font-weight:700; font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
+  .qa .a{background:var(--card); padding:12px 14px; font-size:14.4px; color:var(--sub); white-space:pre-wrap}
+
+  /* 코드 바로 아래 붙는 이름 풀이 */
+  .names{margin:8px 0 0; padding:11px 14px; background:var(--code-bg);
+    border-radius:9px; font-size:13.6px; line-height:1.66}
+  .names dl{margin:0; display:grid; grid-template-columns:auto 1fr; gap:4px 12px}
+  .names dt{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;
+    font-size:12.8px; color:var(--brand); font-weight:700; white-space:nowrap}
+  .names dd{margin:0; color:var(--sub)}
+  @media (max-width:520px){
+    .names dl{grid-template-columns:1fr; gap:1px 0}
+    .names dd{margin:0 0 7px}
+  }
+
+  ul.clean{margin:9px 0; padding-left:20px} ul.clean li{margin:5px 0}
+  .muted{color:var(--sub)}
+  footer{margin-top:54px; padding:18px 0 70px; color:var(--sub); font-size:13px; border-top:1px solid var(--line)}
+  a{color:var(--brand)}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--brand); outline-offset:2px}
+  @media (max-width:560px){ .wrap{padding:0 16px} .trace > li{padding-left:38px} }
+  @media print{ nav.toc{display:none} body{background:#fff} }
+</style>
+
+<!--
+  사용법
+  - <title>은 2~4단어 고유명사구. "무엇에 대한 보고인지"가 드러나게.
+  - 아래 자리표시자를 전부 교체한다. 남은 자리표시자가 있으면 미완성이다.
+  - 쓰지 않는 섹션은 통째로 지운다. 빈 제목만 남기지 않는다.
+
+  재사용 블록
+  - .qa          실제 주고받은 대화 (증상 그대로)
+  - .trace       번호가 의미를 갖는 추적 단계
+  - .names       바로 위 코드·설명에 나온 이름 풀이 (문서 끝 용어집 금지)
+  - .note        info / .warn 주의 / .bad 원인·경고 / .ok 해결·핵심
+  - .badge       b-ok 확인 / b-warn 미확인 / b-bad 실패 / b-info 판정불가
+  - pre 안에서   .c 주석 / .del 삭제줄 / .add 추가줄
+-->
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">프로젝트 · 범위</div>
+    <h1>장애 조치 보고</h1>
+    <p>무엇을 점검하다 무엇을 찾아 어떻게 조치했는지 두세 문장. 틀린 가설까지 남긴다는 점을 밝혀, 다음 사람이 처음부터 파지 않게 한다.</p>
+    <div class="herometa">
+      <span class="chip">YYYY. MM. DD.</span>
+      <span class="chip">이미지 · vX.Y.Z → vX.Y.Z+1</span>
+      <span class="chip">브랜치 커밋해시</span>
+    </div>
+  </div>
+</header>
+
+<nav class="toc">
+  <div class="wrap">
+    <a href="#summary">요약</a>
+    <a href="#check">점검 결과</a>
+    <a href="#bug-a">장애 A · 한 줄 제목</a>
+    <a href="#deploy">배포</a>
+    <a href="#todo">남은 일</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<section id="summary">
+  <h2>요약</h2>
+  <p class="lead">무엇을 하다가 발견했는지 한 문장.</p>
+
+  <div class="grid g4">
+    <div class="stat"><div class="n">0</div><div class="l">조치한 장애</div></div>
+    <div class="stat"><div class="n">0</div><div class="l">통과한 테스트</div></div>
+    <div class="stat"><div class="n">0</div><div class="l">변경 파일</div></div>
+    <div class="stat"><div class="n">0</div><div class="l">확인한 문서</div></div>
+  </div>
+
+  <div class="grid g2" style="margin-top:13px">
+    <div class="card">
+      <b class="t">장애 A <span class="badge b-ok">코드 수정 완료</span></b>
+      <div class="d">증상과 원인을 한두 문장으로. 자세한 내용은 아래 섹션에서.</div>
+    </div>
+    <div class="card">
+      <b class="t">장애 B <span class="badge b-warn">일부만 조치</span></b>
+      <div class="d">우리가 못 고치는 부분이 있으면 여기서 미리 밝힌다.</div>
+    </div>
+  </div>
+
+  <div class="note ok">
+    <b>가장 중요한 한 줄.</b> 이 문서에서 하나만 기억해야 한다면 무엇인지.
+  </div>
+</section>
+
+<section id="check">
+  <h2>실사용 점검 결과</h2>
+  <p class="lead">어디서 어떤 기준으로 확인했는지.</p>
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>기능</th><th>입력</th><th>결과</th></tr></thead>
+      <tbody>
+        <tr><td>기능명</td><td><code>실제 입력</code></td><td><span class="badge b-ok">정상</span></td></tr>
+        <tr><td>기능명</td><td><code>실제 입력</code></td><td><span class="badge b-bad">장애 A</span> 짧은 설명</td></tr>
+        <tr><td>기능명</td><td><code>실제 입력</code></td><td><span class="badge b-info">판정 불가</span> 왜 판정 못 했는지</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="bug-a">
+  <h2>장애 A · 한 줄로 요약한 증상</h2>
+  <p class="lead">이 장애가 왜 중요한지 한 문장.</p>
+
+  <h3>증상</h3>
+  <div class="qa">
+    <div class="q">사용자가 실제로 입력한 것</div>
+    <div class="a">서비스가 실제로 응답한 것. 다듬지 말고 그대로.</div>
+  </div>
+  <p class="muted">조건을 좁힌 결과. 어떤 경우엔 되고 어떤 경우엔 안 되는지.</p>
+
+  <h3>원인 추적</h3>
+  <ol class="trace">
+    <li>
+      <h4>단계 제목</h4>
+      <p>어디를 봤고 무엇을 알았는지.</p>
+      <div class="names"><dl>
+        <dt>이름</dt>
+        <dd>어디 있고 무슨 일을 하는지. 한 줄.</dd>
+      </dl></div>
+    </li>
+    <li>
+      <h4>가설: 틀린 가설 <span class="badge b-bad">틀림</span></h4>
+      <p>어떤 근거로 의심했고, 무엇으로 아님을 확인했는지. <b>지우지 않는다.</b></p>
+    </li>
+    <li>
+      <h4>실제 원인</h4>
+      <p>무엇이 원인이었는지.</p>
+    </li>
+  </ol>
+
+  <h3>수정</h3>
+<pre><code> 기존 코드 줄
+<span class="add">+    추가한 줄</span>
+<span class="del">-    지운 줄</span>
+ 기존 코드 줄
+</code></pre>
+  <div class="names"><dl>
+    <dt>이름</dt>
+    <dd>방금 코드에 나온 이름 풀이.</dd>
+  </dl></div>
+
+  <div class="note">
+    <b>왜 다른 방법으로는 안 되는가.</b> 더 자연스러워 보이는 수정안을 택하지 않은 이유.
+  </div>
+
+  <h3>검증</h3>
+  <ul class="clean">
+    <li>회귀 테스트 추가 — 파일 경로</li>
+    <li>수정을 되돌리면 <b>해당 테스트만 실패</b>하는 것 확인</li>
+    <li>배포 후 실화면 재현 결과</li>
+  </ul>
+</section>
+
+<section id="deploy">
+  <h2>배포</h2>
+  <p class="lead">무엇을 올렸고 무엇은 안 올렸는지.</p>
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>항목</th><th>내용</th></tr></thead>
+      <tbody>
+        <tr><td>브랜치</td><td><code>브랜치명</code> → <code>대상</code> 병합 (<code>해시</code>)</td></tr>
+        <tr><td>이미지</td><td><code>이름</code> <code>이전</code> → <code>새 버전</code></td></tr>
+        <tr><td>되돌릴 태그</td><td><code>이전 태그</code></td></tr>
+        <tr><td>변경 파일</td><td>경로 나열</td></tr>
+        <tr><td>테스트</td><td>돌린 범위와 통과 수</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note warn">
+    전체 스위트를 못 돌렸거나 환경 제약이 있었다면 여기 적는다. 숨기지 않는다.
+  </div>
+
+  <h3>배포 후 확인한 것</h3>
+  <ul class="clean">
+    <li><span class="badge b-ok">확인</span> 확인한 항목</li>
+    <li><span class="badge b-warn">미확인</span> 못 한 항목 — 왜 못 했는지</li>
+  </ul>
+</section>
+
+<section id="todo">
+  <h2>남은 일</h2>
+
+  <div class="grid g2">
+    <div class="card">
+      <b class="t">① 할 일 <span class="badge b-bad">가장 시급</span></b>
+      <div class="d">무엇을, 왜, 언제까지. 다음 사람이 바로 집을 수 있게.</div>
+    </div>
+    <div class="card">
+      <b class="t">② 할 일</b>
+      <div class="d">내용</div>
+    </div>
+  </div>
+</section>
+
+<footer class="wrap">
+  프로젝트 · 보고 범위 · YYYY. MM. DD. 작성<br>
+  관련 문서: <code>경로</code><br>
+  이 문서에는 비밀번호·키·서버 접속 정보를 적지 않았습니다.
+</footer>
+
+</div>

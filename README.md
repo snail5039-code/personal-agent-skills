@@ -12,6 +12,7 @@ Codex와 Claude Code에서 쓰는 개인 스킬 모음입니다.
 | **자기소개서** | `$cover-letter-writing` | 채용공고와 경험을 연결해 작성 · 첨삭 | 초안 · 첨삭본, 확인 필요 항목, 예상 면접 질문 |
 | **RAG 에이전트** | `$rag-agent-builder` | 문서 폴더로 RAG 에이전트 구축 · 평가 | 파이프라인 프로젝트, 평가 리포트 |
 | **한국 채용공고 탐색** | `$korean-job-discovery` | 국내 채용 사이트·기업 채용 페이지에서 공고를 찾고 공식 원문으로 확인 | 공고 목록, 확인한 출처, 남은 확인 사항 |
+| **장애 조치 보고서** | `$incident-fix-report` | 장애를 재현·추적해 고치고 그 과정을 보고서로 기록 | 코드 수정 · 회귀 테스트, HTML 보고서, 남은 일 목록 |
 
 <br>
 
@@ -45,6 +46,8 @@ cd personal-agent-skills
 | RAG 에이전트 | `$rag-agent-builder C:\docs 폴더로 RAG 에이전트 만들어줘` |
 | RAG 평가 | `$rag-agent-builder data/golden.csv로 평가하고 개선점 알려줘` |
 | 채용공고 탐색 | `$korean-job-discovery 서울 신입 백엔드·AI 에이전트 공고 찾아줘` |
+| 장애 조치 | `$incident-fix-report 예약 현황이 계속 실패하는데 원인 찾아서 고쳐줘` |
+| 조치 보고서 | `$incident-fix-report 오늘 고친 거 인수인계용 보고서로 정리해줘` |
 
 <br>
 
